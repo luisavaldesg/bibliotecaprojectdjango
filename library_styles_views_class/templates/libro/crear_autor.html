@@ -1,0 +1,71 @@
+<!-- # === RENDERIZADO POR DEFECTO: === #
+    - Renderizamos el template con el autoform que llega como parrafo (autor_form.as_p)
+
+    # === RENDERIZADO MANUAl === #
+    - Creamos nosotros mismos los campos
+    - Se envian en la request POST
+    - Sin autorform
+
+
+    Con form es como django renderiza cuando usamos UpdateView o ListView
+    trata todo como un objeto por eso es que en la ruta se debe enviar pk como id
+
+    de forma global con: form
+    carga toda la información.
+    Heredar de index 
+-->
+{% extends 'index.html' %}
+{% block tittle %}
+    Biblioteca.dev | Registro de Autores
+{% endblock tittle %}
+
+{% block body %}
+    <form method="POST">
+        {% csrf_token %} <!-- Seguridad Middleware-->
+        <!-- Manejar el error si un id no existe (editar) -->
+        {% if error %}
+            <h2>{{ error }}</h2>
+        {% else %}
+            <div class="card">
+                <div class="card-header">
+                    <strong>Formulario de Registro</strong>
+                </div>
+
+                <div class="card-body card-block">
+                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col col-md-3">{{ form.nombre.label }}</div>
+                            <div class="col-12 col-md-9">{{ form.nombre }}</div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3">{{ form.apellido.label }}</div>
+                            <div class="col-12 col-md-9">{{ form.apellido }}</div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3">{{ form.nacionalidad.label }}</div>
+                            <div class="col-12 col-md-9">{{ form.nacionalidad }}</div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3">{{ form.descripcion.label }}</div>
+                            <div class="col-12 col-md-9">{{ form.descripcion }}</div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                            <button type="reset" class="btn btn-danger">Cancelar</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        {% endif %}
+    </form>
+
+{% endblock body %}
+
+
+
